@@ -1,0 +1,64 @@
+# Extends automatic detection of silences with additional parameters for
+# separating between simple silences and speech pauses (procedure)
+#
+# Run on a single sound. Result is a TextGrid similar to that obtained from
+# To TextGrid (silences), but with a further discrimination between pauses and
+# silences.
+#
+# .min_pitch = Minimum pitch of Sound
+# .silence   = Silence threshold (in dB below the peak)
+# .min_pause = Minimum length of silence/pause in seconds
+# .before    = Initial margin in voiced intervals. Pauses must start after this.
+# .after     = Final margin in voiced intervals. Pauses must end before this.
+#
+# Author: Jose Joaquin Atria
+# Version: 0.9.1
+# Last modified:   October 24, 2014
+#
+# This script is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of
+# the License, or (at your option) any later version.
+#
+# A copy of the GNU General Public License is available at
+# <http://www.gnu.org/licenses/>.
+
+include ../procedures/find_label.proc
+
+procedure textgridPauses (.min_pitch, .silence, .min_pause, .before, .after)
+  .uv$     = "silent"
+  .v$      = "sounding"
+  .pause$  = "pause"
+
+  .name$ = selected$("Sound")
+  .tg = nowarn To TextGrid (silences): .min_pitch, 0,
+    ... .silence, .min_pause, 0.01, .uv$, .v$
+  Rename: .name$ + "_pauses"
+
+  @findLabel(1, .v$)
+  .first_v = findLabel.return
+  .first_v_end = Get end point: 1, .first_v
+
+  @findFromEnd(1, .v$, 1)
+  .last_v = findFromEnd.return
+  .last_v_start = Get start point: 1, .last_v
+
+  @findFromStart(1, .uv$, .first_v)
+  .first_vuv = findFromStart.return
+
+  .return = 0
+  if .first_vuv
+    for .i from .first_vuv to .last_v-1
+      .label$ = Get label of interval: 1, .i
+      if .label$ = .uv$
+        .start = Get start point: 1, .i
+        .end = Get end point: 1, .i
+        if    .start >= (.first_v_end + .before) and
+          ... .end <=   (.last_v_start - .after)
+          .return += 1
+          Set interval text: 1, .i, .pause$
+        endif
+      endif
+    endfor
+  endif
+endproc
