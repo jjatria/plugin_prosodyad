@@ -2,9 +2,10 @@
 #
 # Design:  Peter Pressman, Jose Joaquin Atria
 # Coding:  Jose Joaquin Atria
-# Version: 0.9.1
+#
+# Version: 0.9.2
 # Initial release: October 21, 2014
-# Last modified:   October 24, 2014
+# Last modified:   December 8, 2014
 #
 # This script is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -80,12 +81,11 @@ for i to total_sounds
     ... minimum_dip_between_peaks,
     ... minimum_pause_duration
 
-  table[i] = selected("Table")
+  table[i]    = selected("Table")
+  sound[i]    = selected("Sound")
+  textgrid[i] = selected("TextGrid")
 
   if save_speaker_objects
-    sound[i]    = selected("Sound")
-    textgrid[i] = selected("TextGrid")
-
     selectObject: sound[i]
     Save as WAV file: output_directory$ +
       ... selected$("Sound") + ".wav"

@@ -2,9 +2,10 @@
 #
 # Design:  Peter Pressman, Jose Joaquin Atria
 # Coding:  Jose Joaquin Atria
-# Version: 0.9.1
+#
+# Version: 0.9.2
 # Initial release: October 21, 2014
-# Last modified:   October 24, 2014
+# Last modified:   December 8, 2014
 #
 # This script is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -25,7 +26,8 @@ form Pressman Analysis...
   real     Minimum_pause_duration_(s)      0.1
 endform
 
-include ../procedures/count_points_in_range.proc
+include ../../plugin_jjatools/procedures/count_points_in_range.proc
+jjatools$ = preferencesDirectory$ + "/plugin_jjatools/"
 
 # Main suffix for generated files
 global.suffix$ = "_pressman"
@@ -65,7 +67,7 @@ selectObject: global.textgrid
 
 # Detect segments with individual non-overlapping speakers
 selectObject: global.textgrid
-runScript: "to_non-overlapping_intervals.praat"
+runScript: jjatools$ + "textgrid/to_non-overlapping_intervals.praat"
 global.overlap = selected("TextGrid")
 
 selectObject: global.overlap
@@ -158,7 +160,7 @@ procedure processSpeakerTier (.tier)
 
   # Pitch detection, based on this silenced copy with a single speaker
   selectObject: tier.sound
-  runScript: "to_pitch_twopass.praat",
+  runScript: jjatools$ + "sound/to_pitch_two-pass.praat",
     ... global.floor_factor, global.ceiling_factor
   tier.pitch = selected("Pitch")
   tier.min_pitch = Get minimum: 0, 0, "Hertz", "Parabolic"
@@ -191,8 +193,8 @@ procedure processSpeakerTier (.tier)
     interval.label$ = Get label of interval: 1, .i
 
     if interval.label$ = string$(.tier)
-      interval.start    = Get start point: 1, .i
-      interval.end      = Get end point:   1, .i
+      interval.start = Get start point: 1, .i
+      interval.end   = Get end point:   1, .i
       selectObject:
         ... tier.pitch,
         ... tier.sound,
@@ -206,8 +208,8 @@ procedure processSpeakerTier (.tier)
 
   # After processing each interval, get measurements for entire tier
   selectObject: tier.sound
-  tier.start = Get start time
-  tier.end   = Get end time
+  tier.start = Object_'tier.sound'.xmin
+  tier.end   = Object_'tier.sound'.xmax
 
   # This requires recalculation of the intensity object, discarding all silent 
   # parts in the tier copy of the original sound.
@@ -251,12 +253,12 @@ procedure mergeSounds ()
 endproc
 
 procedure processInterval (.start, .end)
-  .pitch        = selected("Pitch")
-  .sound        = selected("Sound")
-  .syllables    = selected("TextGrid")
+  .pitch         = selected("Pitch")
+  .sound         = selected("Sound")
+  .syllables     = selected("TextGrid")
   .point_process = selected("PointProcess")
-  .formant      = selected("Formant")
-  .intensity    = selected("Intensity")
+  .formant       = selected("Formant")
+  .intensity     = selected("Intensity")
 
   .duration = .end - .start
 
@@ -351,7 +353,7 @@ endproc
 procedure writeOutput ()
   selectObject: final.table
   Append row
-  .r = Get number of rows
+  .r = Object_'final.table'.nrow
 
   Set string value:  .r, "conversation",           global.name$
   Set string value:  .r, "speaker",                tier.speaker$
@@ -426,7 +428,7 @@ procedure int2db (.n, .ref)
 endproc
 
 procedure equaliseTierDurations ()
-  runScript: "make_tier_times_equal.praat"
+  runScript: jjatools$ + "textgrid/make_tier_times_equal.praat"
   .name$ = selected$("TextGrid")
   if index(.name$, "_equalised")
     removeObject: global.textgrid

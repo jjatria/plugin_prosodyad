@@ -18,6 +18,9 @@
 #                                                                         #
 ###########################################################################
 #
+# modified 2014.12.04 by José Joaquín Atria
+# + Changed applicable object queries to direct attribute queries
+#
 # modified 2014.09.23 by José Joaquín Atria
 # + Updated syntax
 # + Major code clean-up
@@ -86,8 +89,8 @@ for this_sound to total_sounds
   selectObject: sound[this_sound]
   sound          = selected()
   sound_name$    = selected$("Sound")
-  sound_duration = Get total duration
-  sound_start    = Get starting time
+  sound_start    = Object_'sound'.xmin
+  sound_duration = Object_'sound'.xmax - sound_start
 
   intensity = To Intensity: minimum_pitch, 0, "yes"
 
@@ -129,7 +132,9 @@ for this_sound to total_sounds
   intensity_curve = To Sound (slice): 1
   Rename: sound_name$ + "_intensity"
 
-  intensity_duration = Get total duration
+  intensity_duration =
+    ... Object_'intensity_curve'.xmax - Object_'intensity_curve'.xmin
+
   time_correction = sound_duration / intensity_duration
 
   selectObject: intensity_curve
@@ -149,7 +154,7 @@ for this_sound to total_sounds
     if value >= lowest_peak
       selectObject: peaks_table
       Append row
-      row = Get number of rows
+      row = Object_'peaks_table'.nrow
       Set numeric value: row, "time",  time
       Set numeric value: row, "value", value
     endif
@@ -160,7 +165,7 @@ for this_sound to total_sounds
   @mergeClosePeaks(peaks_table)
 
   selectObject: peaks_table
-  total_syllables = Get number of rows
+  total_syllables = Object_'peaks_table'.nrow
 
   selectObject: sound
   nuclei_textgrid = To TextGrid: "nuclei", "nuclei"
@@ -196,25 +201,24 @@ endproc
 
 procedure populateTextGrid (.textgrid, .table)
   selectObject: .table
-  .rows = Get number of rows
+  .rows = Object_'.table'.nrow
 
+  selectObject: .textgrid
   for .r to .rows
-    selectObject: .table
-    .time = Get value: .r, "time"
-    selectObject: .textgrid
+    .time = Object_'.table'[.r, "time"]
     Insert point: 1, .time, string$(.r)
   endfor
 endproc
 
 procedure mergeClosePeaks (.table)
   selectObject: .table
-  .rows = Get number of rows
+  .rows = Object_'.table'.nrow
   for .r to .rows-1
-    .ta  = Get value: .r,   "time"
-    .tb  = Get value: .r+1, "time"
+    .ta  = Object_'.table'[.r,   "time"]
+    .tb  = Object_'.table'[.r+1, "time"]
 
-    .ia  = Get value: .r,   "value"
-    .ib  = Get value: .r+1, "value"
+    .ia  = Object_'.table'[.r,   "value"]
+    .ib  = Object_'.table'[.r+1, "value"]
 
     if minimum_spread > (.tb - .ta)
       Remove row: .r
@@ -232,17 +236,17 @@ procedure removeSmallDips (.table, .sound, .intensity)
   .pitch = To Pitch (ac): 0.02, 30, 4, "no", 0.03, 0.25, 0.01, 0.35, 0.25, 450
 
   selectObject: .table
-  .total_rows = Get number of rows
+  .total_rows = Object_'.table'.nrow
   for .p to .total_rows-1
     # Iterate through table from the bottom
     .row = .total_rows - .p
     selectObject: .table
 
-    .time_a  = Get value: .row, "time"
-    .intensity_a = Get value: .row, "value"
+    .time_a      = Object_'.table'[.row, "time"]
+    .intensity_a = Object_'.table'[.row, "value"]
 
-    .time_b  = Get value: .row+1, "time"
-    .intensity_b = Get value: .row+1, "value"
+    .time_b      = Object_'.table'[.row+1, "time"]
+    .intensity_b = Object_'.table'[.row+1, "value"]
 
     selectObject: .intensity
     .dip = Get minimum: .time_a, .time_b, "None"
@@ -294,7 +298,7 @@ procedure writeSummary ()
 
   selectObject: prepareSummary.id
   Append row
-  row = Get number of rows
+  row = Object_'prepareSummary.id'.nrow
   Set string value:  row, "soundname",         sound_name$
   Set numeric value: row, "nsyll",             total_syllables
   Set numeric value: row, "npause",            total_pauses
@@ -308,15 +312,15 @@ endproc
 procedure addToFinalSelection (.id)
     selectObject: final_selection
     Append row
-    .row = Get number of rows
+    .row = Object_'final_selection'.nrow
     Set numeric value: .row, "id", .id
 endproc
 
 procedure restoreFinalSelection ()
   selectObject: final_selection
-  .rows = Get number of rows
+  .rows = Object_'final_selection'.nrow
   for .r to .rows
-    .id[.r] = Get value: .r, "id"
+    .id[.r] = Object_'final_selection'[.r, "id"]
   endfor
   for .r to .rows
     plusObject: .id[.r]
