@@ -31,7 +31,7 @@ form Pressman Analysis
   real     Minimum_pause_duration_(s)             0.1
 endform
 
-include ../procedures/check_directory.proc
+include ../../plugin_jjatools/procedures/check_directory.proc
 
 snd_extension$ = "wav"
 tgd_extension$ = "TextGrid"
@@ -103,7 +103,8 @@ for i to total_sounds
   removeObject: sound, textgrid
 endfor
 
-nocheck selectObject: undefined
+removeObject: sounds,textgrids
+
 for i to total_sounds
   plusObject: table[i]
 endfor
