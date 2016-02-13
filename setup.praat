@@ -18,18 +18,18 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 
-if !fileReadable("../plugin_jjatools/")
-  exitScript: "Pressman plugin requires a copy of the JJATools plugin, " +
-    ... "available at https://github.com/jjatria/plugin_jjatools" +
-    ... newline$
+if !fileReadable("../plugin_tgutils/")
+  exitScript:
+    ... "Prosodyad requires a copy of the tgutils CPrAN plugin." + newline$ +
+    ... "Please see http://cpran.net/plugins/tgutils" + newline$
 endif
 
 ## Static commands:
 
 # Base menu
-Add menu command: "Objects", "Praat", "Pressman",                           "",         0, ""
-Add menu command: "Objects", "Praat", "Run analysis (batch)...",            "Pressman", 1, "scripts/batch_analysis.praat"
+Add menu command: "Objects", "Praat", "Prosodyad",               "CPrAN",     1, ""
+Add menu command: "Objects", "Praat", "Run analysis (batch)...", "Prosodyad", 2, "scripts/batch_analysis.praat"
 
 ## Dynamic commands
-Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Pressman analysis...",         "",                      0, "scripts/main_analysis.praat"
+Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Prosodyad analysis...",         "",                      0, "scripts/main_analysis.praat"
 Add action command: "Sound",    1, "",         0, "", 0, "To TextGrid (pauses)...",      "Annotate -",            1, "scripts/to_textgrid_pauses.praat"

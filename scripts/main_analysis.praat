@@ -26,8 +26,9 @@ form Pressman Analysis...
   real     Minimum_pause_duration_(s)      0.1
 endform
 
-include ../../plugin_jjatools/procedures/count_points_in_range.proc
-jjatools$ = preferencesDirectory$ + "/plugin_jjatools/"
+include ../../plugin_tgutils/procedures/count_points_in_range.proc
+tgutils$ = preferencesDirectory$ + "/plugin_tgutils/scripts/"
+twopass$ = preferencesDirectory$ + "/plugin_twopass/scripts/"
 
 # Main suffix for generated files
 global.suffix$ = "_pressman"
@@ -67,7 +68,7 @@ selectObject: global.textgrid
 
 # Detect segments with individual non-overlapping speakers
 selectObject: global.textgrid
-runScript: jjatools$ + "textgrid/to_non-overlapping_intervals.praat"
+runScript: tgutils$ + "to_non-overlapping_intervals.praat"
 global.overlap = selected("TextGrid")
 
 selectObject: global.overlap
@@ -160,7 +161,7 @@ procedure processSpeakerTier (.tier)
 
   # Pitch detection, based on this silenced copy with a single speaker
   selectObject: tier.sound
-  runScript: jjatools$ + "sound/to_pitch_two-pass.praat",
+  runScript: twopass$ + "to_pitch_two-pass.praat",
     ... global.floor_factor, global.ceiling_factor
   tier.pitch = selected("Pitch")
   tier.min_pitch = Get minimum: 0, 0, "Hertz", "Parabolic"
@@ -211,7 +212,7 @@ procedure processSpeakerTier (.tier)
   tier.start = Object_'tier.sound'.xmin
   tier.end   = Object_'tier.sound'.xmax
 
-  # This requires recalculation of the intensity object, discarding all silent 
+  # This requires recalculation of the intensity object, discarding all silent
   # parts in the tier copy of the original sound.
   selectObject: tier.sound
   .textgrid = To TextGrid (silences): tier.min_pitch, 0,
@@ -428,7 +429,7 @@ procedure int2db (.n, .ref)
 endproc
 
 procedure equaliseTierDurations ()
-  runScript: jjatools$ + "textgrid/make_tier_times_equal.praat"
+  runScript: tgutils$ + "make_tier_times_equal.praat"
   .name$ = selected$("TextGrid")
   if index(.name$, "_equalised")
     removeObject: global.textgrid
