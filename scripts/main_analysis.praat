@@ -309,7 +309,10 @@ procedure processInterval (.start, .end)
 
   # Calculate formant values
   selectObject: .formant
-  .mean_f1 = Get mean: 1, .start, .end, "Hertz"
+  .mean_f1 = Get mean: 1,               .start, .end, "Hertz"
+  .mean_f2 = Get mean: 2,               .start, .end, "Hertz"
+  .sd_f1   = Get standard deviation: 1, .start, .end, "Hertz"
+  .sd_f2   = Get standard deviation: 2, .start, .end, "Hertz"
 
   # Calculate intensity-related measures
   selectObject: .intensity
@@ -339,6 +342,9 @@ procedure createOutputTable ()
     ... "hf500"           + "_dB" + " " +
     ... "jitter"          + ""    + " " +
     ... "f1_mean"         + "_Hz" + " " +
+    ... "f1_sd"           + "_Hz" + " " +
+    ... "f2_mean"         + "_Hz" + " " +
+    ... "f2_sd"           + "_Hz" + " " +
     ... "intensity_min"   + "_dB" + " " +
     ... "intensity_max"   + "_dB" + " " +
     ... "intensity_mean"  + "_dB" + " " +
@@ -361,6 +367,9 @@ procedure writeOutput ()
   Set numeric value: .r, "start",                  processInterval.start
   Set numeric value: .r, "end",                    processInterval.end
   Set numeric value: .r, "f1_mean"        + "_Hz", processInterval.mean_f1
+  Set numeric value: .r, "f1_sd"          + "_Hz", processInterval.sd_f1
+  Set numeric value: .r, "f2_mean"        + "_Hz", processInterval.mean_f2
+  Set numeric value: .r, "f2_sd"          + "_Hz", processInterval.sd_f2
   Set numeric value: .r, "pitch_floor"    + "_Hz", processInterval.pitch_floor
   Set numeric value: .r, "pitch_min"      + "_Hz", processInterval.min_pitch
   Set numeric value: .r, "pitch_max"      + "_Hz", processInterval.max_pitch
