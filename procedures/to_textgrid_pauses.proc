@@ -39,7 +39,7 @@ procedure textgridPauses (.min_pitch, .silence, .min_pause, .before, .after)
   .first_v = findLabel.return
   .first_v_end = Get end point: 1, .first_v
 
-  @findLabelBehind(1, .v$, 1)
+  @findLabelBehind(1, .v$, -1)
   .last_v = findLabelBehind.return
   .last_v_start = Get start point: 1, .last_v
 
