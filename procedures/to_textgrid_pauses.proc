@@ -52,9 +52,9 @@ procedure textgridPauses (.min_pitch, .silence, .min_pause, .before, .after)
       .label$ = Get label of interval: 1, .i
       if .label$ = .uv$
         .start = Get start point: 1, .i
-        .end = Get end point: 1, .i
-        if    .start >= (.first_v_end + .before) and
-          ... .end <=   (.last_v_start - .after)
+        .end   = Get end point:   1, .i
+        if    .start >= (.first_v_end  + .before) and
+          ... .end   <= (.last_v_start - .after)
           .return += 1
           Set interval text: 1, .i, .pause$
         endif
