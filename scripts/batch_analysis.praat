@@ -31,7 +31,7 @@ form Pressman Analysis
   real     Minimum_pause_duration_(s)             0.1
 endform
 
-include ../../plugin_jjatools/procedures/check_directory.proc
+include ../../plugin_utils/procedures/check_directory.proc
 
 snd_extension$ = "wav"
 tgd_extension$ = "TextGrid"
