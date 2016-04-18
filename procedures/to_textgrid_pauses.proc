@@ -25,6 +25,17 @@
 
 include ../../plugin_tgutils/procedures/find_label.proc
 
+#! ~~~ params
+#! in:
+#!   .min_pitch: Minimum pitch of Sound
+#!   .silence: Silence threshold (in dB below the peak)
+#!   .min_pause: Minimum length of silence/pause in seconds
+#!   .before: Initial margin in voiced intervals. Pauses must start after this.
+#!   .after: Final margin in voiced intervals. Pauses must end before this.
+#! out:
+#!   .return:
+#! ~~~
+#!
 procedure textgridPauses (.min_pitch, .silence, .min_pause, .before, .after)
   .uv$     = "silent"
   .v$      = "sounding"
