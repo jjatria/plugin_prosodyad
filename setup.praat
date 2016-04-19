@@ -31,5 +31,7 @@ Add menu command: "Objects", "Praat", "Prosodyad",               "CPrAN",     1,
 Add menu command: "Objects", "Praat", "Run analysis (batch)...", "Prosodyad", 2, "scripts/batch_analysis.praat"
 
 ## Dynamic commands
-Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Prosodyad analysis...",         "",                      0, "scripts/main_analysis.praat"
-Add action command: "Sound",    1, "",         0, "", 0, "To TextGrid (pauses)...",      "Annotate -",            1, "scripts/to_textgrid_pauses.praat"
+Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Prosodyad - ", "", 0, ""
+Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Prosodyad analysis...",   "Prosodyad -", 1, "scripts/main_analysis.praat"
+Add action command: "Sound",    1, "TextGrid", 1, "", 0, "Turn-taking analysis...", "Prosodyad -", 1, "scripts/exchanges_and_interruptions.praat"
+Add action command: "Sound",    1, "",         0, "", 0, "To TextGrid (pauses)...", "Annotate -",  1, "scripts/to_textgrid_pauses.praat"
