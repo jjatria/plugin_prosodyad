@@ -19,7 +19,7 @@
 
 # Optional tracing, provided by the utils plugin
 include ../../plugin_utils/procedures/trace.proc
-trace.enable = 0     ; Enable or disable tracing. Set to 1 for tracing
+trace.enable  = 0    ; Enable or disable tracing. Increase for tracing
 trace.output$ = ""   ; Send trace messages to Info window (or file if filename)
 
 include ../../plugin_tgutils/procedures/extract_tiers_by_name.proc
@@ -107,7 +107,6 @@ selectObject: textgrid
 if extractTiersByName.return
   valid_tiers = extractTiersByName.return
   Rename: "valid_tiers"
-  @trace: "  Valid tiers: " + string$(selected()) + ". " + selected$()
 else
   selectObject: sound, textgrid
   exitScript: "TextGrid does not have any valid tiers"
@@ -116,7 +115,6 @@ endif
 # Detect speaker overlaps
 runScript: tgutils$ + "to_non-overlapping_intervals.praat"
 overlap_tier = selected("TextGrid")
-@trace: "  Overlap tier: " + string$(selected()) + ". " + selected$()
 
 # Detect raw speaker exchanges
 runScript: "find_exchanges.praat"
@@ -142,6 +140,8 @@ for i to Object_'exchanges'.nrow
   speaker$ = Object_'exchanges'$[i, "speaker"]
   start    = Object_'exchanges'[i, "start"]
   end      = Object_'exchanges'[i, "end"]
+
+  @trace: "    [" + string$(i) + "] (" + fixed$(start, 3) + " - " + fixed$(end, 3) + ")"
 
   selectObject: sound
   @tabulatePauses: speaker$, start, end
@@ -259,10 +259,14 @@ procedure tabulateExchanges: .i
   .parent = nocheck Get high interval at time:
     ... 1, .time + abs(number(.label$) / 2)
 
-  if    .parent != undefined and
-    ... .parent == Object_'.table'[.i, "index"]
+  trace.level -= 1
+  @trace: "      index: " + fixed$(.index, 0)
+  @trace: "      time: " + fixed$(.time, 2)
+  @trace: "      label: " + fixed$(number(.label$), 2)
+  @trace: "      parent: " + fixed$(.parent, 0)
+  trace.level += 1
 
-    # @trace: "Parent of exchange " + string$(exchange_index) + " is current"
+  if .time != undefined
     selectObject: .table
     Set string value: .i, "exchange", .label$
 
@@ -280,8 +284,6 @@ procedure tabulateExchanges: .i
     selectObject: .textgrid
     .interval = Get interval at time: 1, .time
     Set interval text: 1, .interval, ""
-  else
-    # @trace: "Parent of exchange " + string$(exchange_index) + " is not current!"
   endif
 
   selectObject: .textgrid, .table
