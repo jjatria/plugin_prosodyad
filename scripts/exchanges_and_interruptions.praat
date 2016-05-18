@@ -133,6 +133,16 @@ Set column label (label): "label", "speaker"
 Insert column: Object_'exchanges'.ncol + 1, "exchange"
 Insert column: Object_'exchanges'.ncol + 1, "type"
 
+@trace: "  Preliminary interval check"
+@preliminaryCheck: 6.4 / minimum_pitch
+if preliminaryCheck.n
+  @trace: "    " +
+    ... "Removed " + string$(preliminaryCheck.n) + " " +
+    ... "exchanges too short for intensity analysis"
+endif
+
+@trace: "  Processing " + string$(Object_'exchanges'.nrow) + " exchanges"
+
 # For each intervention, tabulate pauses and exchanges. Overlaps (the other
 # type of interruptions) are detected later, to prevent counting
 # between-speaker overlaps as interruptions.
@@ -327,4 +337,32 @@ procedure tabulateOverlaps: .speaker$, .start, .end
 
   removeObject: .overlaps
   selectObject: .textgrid, .table
+endproc
+
+#! ~~~ params
+#! in:
+#!   .min: The minimum duration for an intervention
+#! selection:
+#!   in:
+#!     table: 1
+#! ~~~
+#!
+#! Process the exchanges Table (as derived from the exchanges TextGrid) to
+#! disregard interventions shorter than a minimum length. This is used to
+#! remove interventions shorter than `6.4 / min_pitch`, which is the shortest
+#! interval for which intensity analysis is possible.
+#!
+procedure preliminaryCheck: .min
+  .table = selected("Table")
+  .n = 0
+  for .i to Object_'.table'.nrow
+    .speaker$ = Object_'.table'$[.i, "speaker"]
+    .start    = Object_'.table'[.i, "start"]
+    .end      = Object_'.table'[.i, "end"]
+
+    if .end - .start < .min
+      Remove row: .i
+      .n += 1
+    endif
+  endfor
 endproc
