@@ -87,8 +87,8 @@ form Turn-taking analysis...
   real     Final_margin_(s)           0.25
 endform
 
-if    numberOfSelected() != 2           or
-  ... numberOfSelected("Sound") != 1    or
+if    numberOfSelected()           != 2 or
+  ... numberOfSelected("Sound")    != 1 or
   ... numberOfSelected("TextGrid") != 1
 
   exitScript: "Selection must be a Sound and a TextGrid object"
