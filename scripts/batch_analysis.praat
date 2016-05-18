@@ -1,19 +1,21 @@
-# Voice analysis (batch)
+# This script is part of the ProsoDyad plugin for Praat.
+# The latest version is available at
+# <http://github.com/jjatria/plugin_prosodyad>
 #
-# Design:  Peter Pressman, Jose Joaquin Atria
-# Coding:  Jose Joaquin Atria
+# The prosodyad plugin is free software: you can redistribute it
+# and/or modify it under the terms of the GNU General Public
+# License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# Version: 0.9.2
-# Initial release: October 21, 2014
-# Last modified:   December 8, 2014
+# The prosodyad plugin is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
 #
-# This script is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation, either version 3 of
-# the License, or (at your option) any later version.
+# You should have received a copy of the GNU General Public License
+# along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# A copy of the GNU General Public License is available at
-# <http://www.gnu.org/licenses/>.
+# Copyright 2014-2016 Peter Pressman, José Joaquín Atria
 
 form Pressman Analysis
   comment  Leave paths empty for GUI selection

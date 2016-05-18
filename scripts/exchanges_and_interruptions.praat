@@ -1,4 +1,6 @@
-# This script is part of the prosodyad plugin for Praat.
+# This script is part of the ProsoDyad plugin for Praat.
+# The latest version is available at
+# <http://github.com/jjatria/plugin_prosodyad>
 #
 # The prosodyad plugin is free software: you can redistribute it
 # and/or modify it under the terms of the GNU General Public
@@ -13,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2016 Peter Pressman and Jose Joaquin Atria
+# Copyright 2016 Peter Pressman, Jose Joaquin Atria
 
 # Optional tracing, provided by the utils plugin
 include ../../plugin_utils/procedures/trace.proc
