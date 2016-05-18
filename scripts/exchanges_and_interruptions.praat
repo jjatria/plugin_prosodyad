@@ -320,9 +320,11 @@ procedure tabulateOverlaps: .speaker$, .start, .end
   .table    = selected("Table")
 
   selectObject: .textgrid
+  .part = Extract part: .start, .end, "yes"
   runScript: tgutils$ + "index_specified_labels.praat",
     ... 1, "^0$", "yes"
   .overlaps = selected("Table")
+  removeObject: .part
 
   for .i to Object_'.overlaps'.nrow
     selectObject: .table
