@@ -260,14 +260,15 @@ endproc
 procedure tabulateExchanges: .i
   .textgrid = selected("TextGrid")
   .table    = selected("Table")
-  .start = Object_'.table'[.i, "start"]
+  .start    = Object_'.table'[.i, "start"]
+  .end      = Object_'.table'[.i, "end"]
 
   selectObject: .textgrid
-  .index  = nocheck Get low index from time:  2, .start
+  .index  = nocheck Get high index from time:  2, .end
   .time   = nocheck Get time of point:        2, .index
   .label$ = nocheck Get label of point:       2, .index
-  .parent = nocheck Get high interval at time:
-    ... 1, .time + abs(number(.label$) / 2)
+  .parent = nocheck Get low interval at time:
+    ... 1, .time - abs(number(.label$) / 2)
 
   trace.level -= 1
   @trace: "      index: " + fixed$(.index, 0)
