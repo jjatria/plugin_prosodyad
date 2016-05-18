@@ -27,7 +27,7 @@ include ../../plugin_tgutils/procedures/extract_tiers_by_name.proc
 trace.enable = 1
 trace.output$ = ""
 
-form Pressman Analysis...
+form ProsoDyad utterance analysis...
   real     Start_(s)                       0 (= all)
   real     End_(s)                         0 (= all)
   positive Max_formant_(Hz)                5500 (= adult male)

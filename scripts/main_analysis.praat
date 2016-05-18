@@ -17,7 +17,7 @@
 #
 # Copyright 2014-2016 Peter Pressman, José Joaquín Atria
 
-form Pressman Analysis...
+form ProsoDyad Analysis...
   positive Max_formant_(Hz)                5500 (= adult male)
   comment  Two-pass pitch detection (Hirst 2011)
   positive Floor_factor                    0.75
