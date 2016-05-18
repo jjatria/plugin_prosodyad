@@ -24,7 +24,7 @@ include ../../plugin_tgutils/procedures/extract_tiers_by_name.proc
 include ../../plugin_utils/procedures/trace.proc
 include ../../plugin_tgutils/procedures/extract_tiers_by_name.proc
 
-trace.enable = 1
+trace.enable = 0
 trace.output$ = ""
 
 form ProsoDyad utterance analysis...
@@ -158,18 +158,18 @@ procedure prosodyadAnalysis: .start, .end
   @writeOutput()
 
   removeObject: .spectrum, .syllables, .exchanges
-  
+
   if .process_part
     removeObject: .sound_part
   endif
-  
+
   selectObject: output_table
   @trace: ""
 endproc
 
 procedure ensureTiers ()
   .textgrid = selected("TextGrid")
-  
+
   selectObject: .textgrid
   @extractTiersByName: "^syllables$", 0
   if !numberOfSelected("TextGrid")
