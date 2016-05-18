@@ -85,7 +85,8 @@ for current from 2 to total_intervals - 1
         # Between-speaker overlap
         Insert point: exchange_tier, midpoint, string$(duration * -1)
       else
-        exitScript: "Impossible case at interval ", current
+        # Perfect turn taking
+        Insert point: exchange_tier, do("Get start point...", overlap_tier, current), "0"
       endif
     endif
   endif
