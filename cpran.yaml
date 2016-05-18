@@ -1,0 +1,25 @@
+---
+Plugin: prosodyad
+Homepage: https://github.com/jjatria/plugin_prosodyad
+Version: 0.9.3
+Maintainer: José Joaquín Atria <jjatria@gmail.com>
+Depends:
+  praat: 5.0.0+
+  Plugins:
+    utils: 0.0.19+
+    tgutils: 0.0.11+
+    selection: 0.0.10+
+Recommends:
+License: GPL3
+Readme: readme.md
+Description:
+  Short: acoustic analysis for 2-party dialogues
+  Long: >
+    The purpose of the scripts contained in this Praat plugin is to obtain
+    acoustic data from long casual speech recordings. It is expected that
+    these data might eventually help in the diagnosis of some specific
+    neurological pathologies.
+
+    The current version of these scripts make measurements for each spoken
+    interval. Future versions might improve the resolution of these
+    measurements, so they can be obtained from smaller windows.
