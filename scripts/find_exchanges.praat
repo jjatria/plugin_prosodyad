@@ -74,19 +74,19 @@ for current from 2 to total_intervals - 1
         # Within-speaker overlap. Do nothing
       else
         # Perfect turn taking
-        Insert point: exchange_tier, do("Get start point...", overlap_tier, current), "0"
-        Insert point: exchange_tier, do("Get end point...",   overlap_tier, current), "0"
+        nocheck Insert point: exchange_tier, do("Get start point...", overlap_tier, current), "0"
+        nocheck Insert point: exchange_tier, do("Get end point...",   overlap_tier, current), "0"
       endif
     else
       if current$ == ""
         # Gap between speakers
-        Insert point: exchange_tier, midpoint, string$(duration)
+        nocheck Insert point: exchange_tier, midpoint, string$(duration)
       elsif current$ == "0"
         # Between-speaker overlap
-        Insert point: exchange_tier, midpoint, string$(duration * -1)
+        nocheck Insert point: exchange_tier, midpoint, string$(duration * -1)
       else
         # Perfect turn taking
-        Insert point: exchange_tier, do("Get start point...", overlap_tier, current), "0"
+        nocheck Insert point: exchange_tier, do("Get start point...", overlap_tier, current), "0"
       endif
     endif
   endif
