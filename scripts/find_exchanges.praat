@@ -51,13 +51,14 @@ for current from 2 to total_intervals - 1
   current$  = Get label of interval: overlap_tier, current
   next$     = Get label of interval: overlap_tier, next
 
-  start    = Get start point: overlap_tier, current
-  end      = Get end point:   overlap_tier, current
-  duration = end - start
-  midpoint = duration / 2 + start
+  start     = Get start point: overlap_tier, current
+  end       = Get end point:   overlap_tier, current
 
-  if previous$ - "0" != ""
-    # Only process when current is between speakers' turns
+  duration  = end - start
+  midpoint  = duration / 2 + start
+
+  # Only process when current is between speakers' turns
+  if !(previous$ == "" or previous$ == "0")
 
     if previous$ == next$
       # Interruption in the turn of a single speaker
