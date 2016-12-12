@@ -18,7 +18,6 @@
 # Copyright 2016 Peter Pressman, José Joaquín Atria
 
 include ../../plugin_utils/procedures/utils.proc
-@normalPrefDir()
 
 # As returned by tgutils@toNonOverlappingIntervals
 original = selected("TextGrid")
@@ -28,7 +27,7 @@ endif
 overlap_tier = 1
 
 # Make sure no two contiguous intervals have the same labels
-runScript: preferencesDirectory$ + "plugin_tgutils/scripts/" +
+runScript: preferencesDirectory$ + "/plugin_tgutils/scripts/" +
   ... "merge_contiguous_labels.praat", overlap_tier
 
 exchanges = selected("TextGrid")
