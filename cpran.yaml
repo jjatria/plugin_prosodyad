@@ -8,6 +8,7 @@ Depends:
   Plugins:
     utils: 0.0.19+
     tgutils: 0.0.11+
+    twopass: 0.0.0+
     selection: 0.0.10+
 Recommends:
 License: GPL3
