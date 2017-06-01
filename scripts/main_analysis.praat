@@ -26,6 +26,9 @@ form ProsoDyad Analysis...
   real     Silence_threshold_(dB)         -25
   real     Minimum_dip_between_peaks_(dB)  1.5 (= up to 4 for clean and filtered)
   real     Minimum_pause_duration_(s)      0.1
+  comment  Analysis resolution (windowing options)
+  real     Window_overlap 0 (= 0 for no overlap; 0.5 for 50% overlap)
+  real     Window_duration_(s) 0 (= entire segment)
 endform
 
 include ../../plugin_utils/procedures/trace.proc
@@ -145,6 +148,30 @@ Sort rows: "start"
 ## Procedures
 ##
 
+procedure window.action ()
+  selectObject: processSpeakerTier.pitch,    processSpeakerTier.sound,
+    ...         processSpeakerTier.textgrid, processSpeakerTier.point_process,
+    ...         processSpeakerTier.formant,  processSpeakerTier.intensity
+
+  runScript: "utterance_analysis.praat", window.start, window.end,
+    ... max_formant, floor_factor, ceiling_factor
+
+  .table[window.index] = selected()
+endproc
+
+procedure window.after_iteration ()
+  selectObject()
+  for .i to window.index
+    plusObject: window.action.table[.i]
+  endfor
+  .table = Append
+  for .i to window.index
+    removeObject: window.action.table[.i]
+  endfor
+endproc
+
+include ../../plugin_window/procedures/window.proc
+
 #
 # Process individual speaker
 # Each tier is expected to hold (speech or non-speech) data for one single
@@ -226,14 +253,21 @@ procedure processSpeakerTier (.tier)
       .start = Get start point: 1, .i
       .end   = Get end point:   1, .i
 
-      selectObject: .pitch, .sound, .textgrid,
-        ... .point_process, .formant, .intensity
+      .window_duration = if window_duration
+        ... then window_duration else .end - .start fi
 
-      runScript: "utterance_analysis.praat", .start, .end, max_formant,
-        ... floor_factor, ceiling_factor
+      @trace: "    Window duration : '.window_duration'"
+      selectObject: .textgrid
+      .part = Extract part: .start, .end, "yes"
+      @window: "duration", .window_duration, window_overlap
+      removeObject: .part
+      pause
 
-      Set string value: 1, "conversation", name$
-      Set string value: 1, "speaker",      speaker$
+      for .row to do("Get number of rows")
+        Set string value: .row, "conversation", name$
+        Set string value: .row, "speaker",      speaker$
+      endfor
+
       if !variableExists("output_table")
         output_table = selected("Table")
       else
