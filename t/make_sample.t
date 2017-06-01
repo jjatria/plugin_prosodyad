@@ -3,6 +3,7 @@ To Sound: "text", "yes"
 male_sound = selected("Sound")
 
 tmp = selected("TextGrid")
+selectObject: tmp
 male_label = Extract one tier: 1
 Set tier name: 1, "awords"
 removeObject: tmp
