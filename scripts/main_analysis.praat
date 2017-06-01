@@ -34,8 +34,9 @@ include ../../plugin_tgutils/procedures/extract_tiers_by_name.proc
 trace.enable = 1
 trace.output$ = ""
 
-tgutils$ = preferencesDirectory$ + "/plugin_tgutils/scripts/"
-twopass$ = preferencesDirectory$ + "/plugin_twopass/scripts/"
+tgutils$    = preferencesDirectory$ + "/plugin_tgutils/scripts/"
+twopass$    = preferencesDirectory$ + "/plugin_twopass/scripts/"
+speechrate$ = preferencesDirectory$ + "/plugin_speechrate/scripts/"
 
 # Main suffix for generated files
 suffix$ = "_pressman"
@@ -184,7 +185,7 @@ procedure processSpeakerTier (.tier)
 
   # Syllable detection, for only this speaker
   selectObject: .sound
-  runScript: "syllable_nuclei.praat",
+  runScript: speechrate$ + "syllable_nuclei.praat",
     ... 1, silence_threshold, min_dip, min_pause,
     ... .min_pitch, min_spread
   .syllables = selected("TextGrid")

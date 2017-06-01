@@ -10,6 +10,7 @@ Depends:
     tgutils: 0.0.11+
     twopass: 0.0.0+
     selection: 0.0.10+
+    speechrate: 0.0.1+
 Recommends:
 License: GPL3
 Readme: readme.md
