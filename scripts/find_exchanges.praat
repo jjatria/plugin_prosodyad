@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2016 Peter Pressman, José Joaquín Atria
+# Copyright 2016-2017 Peter Pressman, José Joaquín Atria
 
 include ../../plugin_utils/procedures/utils.proc
 

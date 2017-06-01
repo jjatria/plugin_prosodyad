@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2014-2016 Peter Pressman, José Joaquín Atria
+# Copyright 2014-2017 Peter Pressman, José Joaquín Atria
 
 include ../../plugin_selection/procedures/tables.proc
 include ../../plugin_tgutils/procedures/count_points_in_range.proc

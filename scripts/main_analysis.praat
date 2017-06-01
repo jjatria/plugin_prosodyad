@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2014-2016 Peter Pressman, José Joaquín Atria
+# Copyright 2014-2017 Peter Pressman, José Joaquín Atria
 
 form ProsoDyad Analysis...
   positive Max_formant_(Hz)                5500 (= adult male)

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with utils. If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2016 Peter Pressman, Jose Joaquin Atria
+# Copyright 2016-2017 Peter Pressman, Jose Joaquin Atria
 
 # Optional tracing, provided by the utils plugin
 include ../../plugin_utils/procedures/trace.proc
