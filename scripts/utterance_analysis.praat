@@ -47,7 +47,7 @@ full_selection = saveSelectionTable.table
 output_table = selected("Table")
 
 @restoreSavedSelection: full_selection
-@prosodyadAnalysis: start, end
+@analysis: start, end
 
 @restoreSavedSelection: full_selection
 @minusSavedSelection: original_selection
@@ -56,7 +56,7 @@ nocheck Remove
 removeObject: full_selection, original_selection
 selectObject: output_table
 
-procedure prosodyadAnalysis: .start, .end
+procedure analysis: .start, .end
   .pitch         = selected("Pitch")
   .sound_full    = selected("Sound")
   .textgrid      = selected("TextGrid")
@@ -246,27 +246,27 @@ procedure writeOutput ()
   Append row
   .r = Object_'.table'.nrow
 
-#   Set string value:  .r, "conversation",           .name$
-#   Set string value:  .r, "speaker",                .speaker$
-  Set numeric value: .r, "start",                  prosodyadAnalysis.start
-  Set numeric value: .r, "end",                    prosodyadAnalysis.end
-  Set numeric value: .r, "f1_mean"        + "_Hz", prosodyadAnalysis.mean_f1
-  Set numeric value: .r, "f1_sd"          + "_Hz", prosodyadAnalysis.sd_f1
-  Set numeric value: .r, "f2_mean"        + "_Hz", prosodyadAnalysis.mean_f2
-  Set numeric value: .r, "f2_sd"          + "_Hz", prosodyadAnalysis.sd_f2
-  Set numeric value: .r, "pitch_floor"    + "_Hz", prosodyadAnalysis.pitch_floor
-  Set numeric value: .r, "pitch_min"      + "_Hz", prosodyadAnalysis.min_pitch
-  Set numeric value: .r, "pitch_max"      + "_Hz", prosodyadAnalysis.max_pitch
-  Set numeric value: .r, "pitch_sd"       + "_Hz", prosodyadAnalysis.pitch_sd
-  Set numeric value: .r, "hf500"          + "_dB", prosodyadAnalysis.hf500
-  Set numeric value: .r, "jitter"         + "",    prosodyadAnalysis.jitter
-  Set numeric value: .r, "intensity_min"  + "_dB", prosodyadAnalysis.min_intensity
-  Set numeric value: .r, "intensity_max"  + "_dB", prosodyadAnalysis.max_intensity
-  Set numeric value: .r, "intensity_mean" + "_dB", prosodyadAnalysis.mean_intensity
-  Set numeric value: .r, "intensity_sd"   + "_dB", prosodyadAnalysis.sd_intensity
-  Set numeric value: .r, "syllables"      + "",    prosodyadAnalysis.total_syllables
-  Set numeric value: .r, "speech_rate"    + "",    prosodyadAnalysis.speech_rate
-  Set numeric value: .r, "pauses"         + "",    prosodyadAnalysis.total_pauses
+# Set string value:  .r, "conversation",           .name$
+# Set string value:  .r, "speaker",                .speaker$
+  Set numeric value: .r, "start",                  analysis.start
+  Set numeric value: .r, "end",                    analysis.end
+  Set numeric value: .r, "f1_mean"        + "_Hz", analysis.mean_f1
+  Set numeric value: .r, "f1_sd"          + "_Hz", analysis.sd_f1
+  Set numeric value: .r, "f2_mean"        + "_Hz", analysis.mean_f2
+  Set numeric value: .r, "f2_sd"          + "_Hz", analysis.sd_f2
+  Set numeric value: .r, "pitch_floor"    + "_Hz", analysis.pitch_floor
+  Set numeric value: .r, "pitch_min"      + "_Hz", analysis.min_pitch
+  Set numeric value: .r, "pitch_max"      + "_Hz", analysis.max_pitch
+  Set numeric value: .r, "pitch_sd"       + "_Hz", analysis.pitch_sd
+  Set numeric value: .r, "hf500"          + "_dB", analysis.hf500
+  Set numeric value: .r, "jitter"         + "",    analysis.jitter
+  Set numeric value: .r, "intensity_min"  + "_dB", analysis.min_intensity
+  Set numeric value: .r, "intensity_max"  + "_dB", analysis.max_intensity
+  Set numeric value: .r, "intensity_mean" + "_dB", analysis.mean_intensity
+  Set numeric value: .r, "intensity_sd"   + "_dB", analysis.sd_intensity
+  Set numeric value: .r, "syllables"      + "",    analysis.total_syllables
+  Set numeric value: .r, "speech_rate"    + "",    analysis.speech_rate
+  Set numeric value: .r, "pauses"         + "",    analysis.total_pauses
 endproc
 
 procedure parseSelection ()
