@@ -31,6 +31,9 @@ form Pressman Analysis
   real     Silence_threshold_(dB)                -25
   real     Minimum_dip_between_peaks_(dB)         1.5 (= up to 4 for clean and filtered)
   real     Minimum_pause_duration_(s)             0.1
+  comment  Analysis resolution (windowing options)
+  real     Window_overlap 0 (= 0 for no overlap; 0.5 for 50% overlap)
+  real     Window_duration_(s) 0 (= entire segment)
 endform
 
 include ../../plugin_utils/procedures/check_directory.proc
@@ -81,7 +84,9 @@ for i to total_sounds
     ... ceiling_factor,
     ... silence_threshold,
     ... minimum_dip_between_peaks,
-    ... minimum_pause_duration
+    ... minimum_pause_duration,
+    ... window_overlap,
+    ... window_duration
 
   table[i]    = selected("Table")
   sound[i]    = selected("Sound")
