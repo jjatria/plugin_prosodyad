@@ -37,45 +37,45 @@ for tier to total_tiers
   endif
 endfor
 
-if matched > 2
-  exitScript: "How many speakers do you have again?"
-endif
+if matched == 2
+  for i from 0 to matched-1
+    tier       = tier[i]
+    other_tier = tier[1-i]
 
-for i from 0 to matched-1
-  tier       = tier[i]
-  other_tier = tier[1-i]
+    total_intervals = Get number of intervals: tier
+    for j from 0 to total_intervals-1
+      interval = total_intervals - j
 
-  total_intervals = Get number of intervals: tier
-  for j from 0 to total_intervals-1
-    interval = total_intervals - j
+      start = Get starting point: tier, interval
+      end   = Get end point:      tier, interval
 
-    start = Get starting point: tier, interval
-    end   = Get end point:      tier, interval
+      previous = Get low interval at time:  tier, start
+      next     = Get high interval at time: tier, end
 
-    previous = Get low interval at time:  tier, start
-    next     = Get high interval at time: tier, end
+      interval$ = Get label of interval: tier, interval
+      previous$ = if previous then
+        ... do$("Get label of interval...", tier, previous)
+        ... else "" fi
+      next$ = if next then
+        ... do$("Get label of interval...", tier, next    )
+        ... else "" fi
 
-    interval$ = Get label of interval: tier, interval
-    previous$ = if previous then
-      ... do$("Get label of interval...", tier, previous)
-      ... else "" fi
-    next$ = if next then
-      ... do$("Get label of interval...", tier, next    )
-      ... else "" fi
+      if interval$ == "" and previous$ != "" and next$ != ""
 
-    if interval$ == "" and previous$ != "" and next$ != ""
+        start_interval = Get high interval at time: other_tier, start
+        end_interval   = Get low interval at time:  other_tier, end
+        other_label$   = if start_interval == end_interval then
+          ... do$("Get label of interval...",
+            ... other_tier, start_interval) else "" fi
 
-      start_interval = Get high interval at time: other_tier, start
-      end_interval   = Get low interval at time:  other_tier, end
-      other_label$   = if start_interval == end_interval then
-        ... do$("Get label of interval...",
-          ... other_tier, start_interval) else "" fi
+        if start_interval == end_interval and other_label$ == ""
+          Remove right boundary: tier, interval
+          Remove left boundary:  tier, interval
+        endif
 
-      if start_interval == end_interval and other_label$ == ""
-        Remove right boundary: tier, interval
-        Remove left boundary:  tier, interval
       endif
-
-    endif
+    endfor
   endfor
-endfor
+else
+  appendInfoLine: "# Not enough tiers matched. Check pattern"
+endif
