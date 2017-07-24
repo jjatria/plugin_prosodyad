@@ -263,7 +263,6 @@ procedure processSpeakerTier (.tier)
       .part = Extract part: .start, .end, "yes"
       @window: "duration", .window_duration, window_overlap
       removeObject: .part
-      pause
 
       for .row to do("Get number of rows")
         Set string value: .row, "conversation", name$
