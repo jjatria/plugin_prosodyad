@@ -83,11 +83,13 @@ endif
 
 # Detect segments with individual non-overlapping speakers
 selectObject: textgrid
-@extractTiersByName: "^[ab]words$", 0
+@extractTiersByName: "^[AaBb]_?words$", 0
 if extractTiersByName.return
   speaker_tiers = extractTiersByName.return
   Rename: "speaker_tiers"
   @trace: "  Speaker tiers: " + string$(selected()) + ". " + selected$()
+else
+  exitScript: "Assumption not met!"
 endif
 
 runScript: tgutils$ + "to_non-overlapping_intervals.praat"
