@@ -22,7 +22,6 @@ form Pressman Analysis
   sentence Sound_directory
   sentence TextGrid_directory
   positive Max_formant_(Hz)                       5500 (= adult male)
-  boolean  Save_speaker_objects                   0
   sentence Save_objects_to
   comment  Two-pass pitch Detection (Hirst 2011)
   positive Floor_factor                           0.75
@@ -49,11 +48,6 @@ sound_directory$ = checkDirectory.name$
 
 @checkDirectory(textGrid_directory$, "Read annotations form...")
 textgrid_directory$ = checkDirectory.name$
-
-if save_speaker_objects
-  @checkDirectory(output_directory$, "Save objects to...")
-  output_directory$ = checkDirectory.name$
-endif
 
 sounds = Create Strings as file list: "sounds",
   ... sound_directory$ + "*" + snd_extension$
@@ -89,23 +83,6 @@ for i to total_sounds
     ... window_duration
 
   table[i]    = selected("Table")
-  sound[i]    = selected("Sound")
-  textgrid[i] = selected("TextGrid")
-
-  if save_speaker_objects
-    selectObject: sound[i]
-    Save as WAV file: output_directory$ +
-      ... selected$("Sound") + ".wav"
-
-    selectObject: textgrid[i]
-    Save as short text file: output_directory$ +
-      ... selected$("TextGrid") + ".TextGrid"
-  endif
-
-  # If you want to keep the speaker objects in the Object list,
-  # comment the following line. Beware that a large number of large files
-  # can quickly use too much memory, rendering the system unstable.
-  removeObject: sound[i], textgrid[i]
 
   removeObject: sound, textgrid
 endfor
