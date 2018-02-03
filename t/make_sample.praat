@@ -1,4 +1,14 @@
-male_synth = Create SpeechSynthesizer: "English", "default"
+if praatVersion >= 6036
+    male_voice$ = "Male1"
+    female_voice$ = "Female3"
+    synth_language$ = "English (Great Britain)"
+else
+    male_voice$ = "default"
+    female_voice$ = "f3"
+    synth_language$ = "English"
+endif
+
+male_synth = Create SpeechSynthesizer: synth_language$, male_voice$
 To Sound: "text", "yes"
 male_sound = selected("Sound")
 
@@ -14,7 +24,7 @@ overlap = 0.2
 shift = duration * overlap
 silence = Create Sound from formula: "silence", 1, 0, shift, 44100, "0"
 
-female_synth = Create SpeechSynthesizer: "English", "f3"
+female_synth = Create SpeechSynthesizer: synth_language$, female_voice$
 To Sound: "text", "yes"
 female_sound = selected("Sound")
 
