@@ -59,41 +59,37 @@ Requirements
 ------------
 
 This set of scripts makes extensive (albeit not exclusive) use of the new
-"variable-substitution-free" Praat syntax. **[Praat][] v5.4+** is recommended (although
-immediately preceding versions up to a certain point should work).
+"variable-substitution-free" Praat syntax. **[Praat][] v5.4+** is recommended
+(although immediately preceding versions up to a certain point should work).
 
 [praat]: http://www.praat.org
 
-A large number of operations rely on functionality provided by the **[JJATools][]
-plugin (v1.0+)**.
+A large number of operations rely on functionality provided by some of the
+plugins distributed via [CPrAN]. In particular, this plugin depends on the
+[tgutils] plugin (which in turn has some dependencies).
 
-[jjatools]: https://github.com/jjatria/plugin_jjatools
+[CPrAN]: http://cpran.net
+[tgutils]: https://gitlab.com/cpran/plugin_tgutils
 
 Installation
 ------------
 
-1. Install [Praat][]
+ 1. Install [Praat][]
 
-2. Install the plugins. You'll have to download both required plugins and
-   extract them into Praat's preferences directory. Please [check the
-   documentation](http://www.fon.hum.uva.nl/praat/manual/preferences_directory.html)
-   for its location on your system.
+ 2. Install the plugin and all of its dependencies.
 
-   If you have `git` and have access to the terminal (`Terminal` on Mac, or
-   any emulator on Linux)
+    Currently, the simplest way to do so is by downloading the plugin bundle
+    in the latest release, and extracting that directly into your Praat
+    preferences directory. Please check the [Praat documentation]
+    for its location on your system.
 
-   ````bash
-   cd /path/to/your/prefences/directory
+    The result of this operation should be a number of directories with names
+    starting with the `plugin_` prefix being directly under your preferences
+    directory.
 
-   # Install JJATools
-   git clone git://github.com/jjatria/plugin_jjatools.git
-
-   # Install this plugin
-   git clone git://github.com/jjatria/plugins_pressman.git
-   ````
-       
-3. The plugin should now be available under Praat -> Pressman, or by selecting
-   a Sound and a TextGrid objects and running `Pressman analysis`
+ 3. The plugin should now be available under Praat -> CPrAN -> Prosodyad, or
+    by selecting a Sound and a TextGrid objects and using the commands in the
+    "Prosodyad" menu.
 
 Authors
 -------
