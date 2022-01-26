@@ -1,7 +1,7 @@
 ---
 Plugin: prosodyad
 Homepage: https://github.com/jjatria/plugin_prosodyad
-Version: 0.9.3
+Version: 1.0.0
 Maintainer: José Joaquín Atria <jjatria@gmail.com>
 Depends:
   praat: 5.0.0+
