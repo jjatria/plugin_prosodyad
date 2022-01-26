@@ -65,11 +65,10 @@ This set of scripts makes extensive (albeit not exclusive) use of the new
 [praat]: http://www.praat.org
 
 A large number of operations rely on functionality provided by some of the
-plugins distributed via [CPrAN]. In particular, this plugin depends on the
-[tgutils] plugin (which in turn has some dependencies).
+plugins distributed via [CPrAN]. Without those plugins, this one will not work.
+Please refer to this plugin's `cpran.yaml` file for the list of dependencies.
 
 [CPrAN]: http://cpran.net
-[tgutils]: https://gitlab.com/cpran/plugin_tgutils
 
 Installation
 ------------
